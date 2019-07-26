@@ -15,6 +15,7 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <hr />
         </header>
+        <h1 className="text-white">React Redux Posts App</h1>
         <main>
           <div className="container fluid">
             <PostForm />

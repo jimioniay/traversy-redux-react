@@ -1,8 +1,8 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import addPost from '../redux/reducers/addPostReducer';
+import { addPost } from '../redux/actionCreators/addPostAction';
 
-export default function PostForm({ handleSubmit }) {
+function PostForm({ handleSubmit }) {
   console.log(handleSubmit);
   const [data, setData] = useState({
     title: '',
@@ -16,19 +16,19 @@ export default function PostForm({ handleSubmit }) {
     });
   };
 
+  const onSubmit = e => {
+    e.preventDefault();
+    handleSubmit(data);
+    setData({
+      title: '',
+      body: '',
+    });
+  };
+
   return (
     <Fragment>
-      <form
-        onSubmit={() => {
-          handleSubmit(data);
-          setData({
-            title: '',
-            body: '',
-          });
-        }}
-      >
+      <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label htmlFor="title">Title</label>
           <input
             type="text"
             name="title"
@@ -56,12 +56,13 @@ export default function PostForm({ handleSubmit }) {
 }
 
 const mapDispatchToProps = dispatch => {
+  console.log('inside dipatch to props: ', dispatch);
   return {
     handleSubmit: data => dispatch(addPost(data)),
   };
 };
 
-connect(
+export default connect(
   null,
   mapDispatchToProps,
 )(PostForm);

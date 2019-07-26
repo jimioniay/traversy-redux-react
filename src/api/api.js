@@ -4,10 +4,12 @@ export default {
   JsPosts: {
     apiFetchJsPosts: async () => {
       try {
-        const resp = await axiosInstance.get('/posts');
+        const resp = await axiosInstance
+          .get('/posts')
+          .then(resp => resp)
+          .catch(err => console.log(err));
         return resp.data;
       } catch (error) {
-        console.log(error);
         return error;
       }
     },
@@ -19,7 +21,9 @@ export default {
           'content-type': 'application/json',
         },
         body: JSON.stringify(data),
-      });
+      })
+        .then(resp => resp)
+        .catch(err => err);
       return resp;
     },
   },
